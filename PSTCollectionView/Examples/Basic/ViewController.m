@@ -7,6 +7,7 @@
 
 #import "ViewController.h"
 #import "Cell.h"
+#import "CustomFlowLayout.h"
 
 static NSString *cellIdentifier = @"TestCell";
 
@@ -16,16 +17,20 @@ static NSString *cellIdentifier = @"TestCell";
 - (void)loadView {
 	[super loadView];
 	
+    
+
+    
 	self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 	
-	PSUICollectionViewFlowLayout *collectionViewFlowLayout = [[PSUICollectionViewFlowLayout alloc] init];
+	CustomFlowLayout *collectionViewFlowLayout = [[CustomFlowLayout alloc] init];
 	
 	[collectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-	[collectionViewFlowLayout setItemSize:CGSizeMake(200, 200)];
+	[collectionViewFlowLayout setItemSize:CGSizeMake(240,100)];
 
 	[collectionViewFlowLayout setMinimumInteritemSpacing:20];
 	[collectionViewFlowLayout setMinimumLineSpacing:10];
 	[collectionViewFlowLayout setSectionInset:UIEdgeInsetsMake(10, 0, 20, 0)];
+    
 	
     _layout = collectionViewFlowLayout;
 	_collectionView = [[PSUICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:collectionViewFlowLayout];
@@ -39,6 +44,9 @@ static NSString *cellIdentifier = @"TestCell";
 	[_collectionView registerClass:[Cell class] forCellWithReuseIdentifier:cellIdentifier];
 	
 	[self.view addSubview:_collectionView];
+    
+    self.data = [[NSMutableArray alloc] init];
+   
 }
 
 
@@ -46,9 +54,46 @@ static NSString *cellIdentifier = @"TestCell";
 - (void)viewDidLoad {
     UIPinchGestureRecognizer* pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.collectionView addGestureRecognizer:pinchRecognizer];
+    
+    
+    int numberOfViews            = 5;
+    CGFloat animationTimePerView = 0.15;
+	for (int i = 0; i < numberOfViews; i++)
+    {
+        NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+		[self performSelector: @selector(addView:) withObject: path afterDelay: i*animationTimePerView];
+     
+        if (i == numberOfViews - 1)
+        {
+            [self performSelector: @selector(scrollToBottomAnimated:) withObject: [NSNumber numberWithBool: YES] afterDelay: i*animationTimePerView];
+            
+
+        }
+      
+	}
+
   
 }
 
+
+- (void)scrollToBottomAnimated:(BOOL)animated
+{
+    NSIndexPath* path = [NSIndexPath indexPathForRow:3 inSection:0];
+   [ _collectionView scrollToItemAtIndexPath:path atScrollPosition:PSTCollectionViewScrollPositionBottom animated:YES];
+}
+
+
+
+
+
+- (void)addView:(NSIndexPath*) path
+{
+    NSLog(@"addView:%d", [path row]);
+    
+    [self.data addObject:path];
+     NSArray* array = [[NSArray alloc] initWithObjects:path, nil];
+    [_collectionView insertItemsAtIndexPaths: array];
+}
 
 
 #pragma mark -
@@ -81,7 +126,7 @@ static NSString *cellIdentifier = @"TestCell";
 #pragma mark - PSTCollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
-    return 63;
+    return [self.data count];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

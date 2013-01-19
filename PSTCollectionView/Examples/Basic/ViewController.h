@@ -12,4 +12,5 @@
 
 @property (retain, nonatomic) PSUICollectionView *collectionView;
 @property (retain, nonatomic) PSUICollectionViewFlowLayout* layout;
+@property (retain, nonatomic) NSMutableArray* data;
 @end

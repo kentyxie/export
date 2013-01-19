@@ -29,6 +29,7 @@
 		78E8AAD0160A335E00988317 /* PSTGridLayoutItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E8AAC3160A335E00988317 /* PSTGridLayoutItem.m */; };
 		78E8AAD1160A335E00988317 /* PSTGridLayoutRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E8AAC5160A335E00988317 /* PSTGridLayoutRow.m */; };
 		78E8AAD2160A335E00988317 /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E8AAC7160A335E00988317 /* PSTGridLayoutSection.m */; };
+		BA076F6D16AA922B002B4CF2 /* CustomFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BA076F6C16AA922B002B4CF2 /* CustomFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,8 @@
 		78E8AAC5160A335E00988317 /* PSTGridLayoutRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutRow.m; sourceTree = "<group>"; };
 		78E8AAC6160A335E00988317 /* PSTGridLayoutSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutSection.h; sourceTree = "<group>"; };
 		78E8AAC7160A335E00988317 /* PSTGridLayoutSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutSection.m; sourceTree = "<group>"; };
+		BA076F6B16AA922B002B4CF2 /* CustomFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomFlowLayout.h; sourceTree = "<group>"; };
+		BA076F6C16AA922B002B4CF2 /* CustomFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +96,8 @@
 		1720001915C9D0A6002D04AE /* PSCollectionViewExample */ = {
 			isa = PBXGroup;
 			children = (
+				BA076F6B16AA922B002B4CF2 /* CustomFlowLayout.h */,
+				BA076F6C16AA922B002B4CF2 /* CustomFlowLayout.m */,
 				1720001A15C9D0C4002D04AE /* AppDelegate.h */,
 				1720001B15C9D0C4002D04AE /* AppDelegate.m */,
 				1720001C15C9D0C4002D04AE /* Cell.h */,
@@ -257,6 +262,7 @@
 				78E8AAD1160A335E00988317 /* PSTGridLayoutRow.m in Sources */,
 				78E8AAD2160A335E00988317 /* PSTGridLayoutSection.m in Sources */,
 				78E7A7451654DF94000C70BE /* PSTCollectionViewUpdateItem.m in Sources */,
+				BA076F6D16AA922B002B4CF2 /* CustomFlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +300,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -313,7 +319,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -327,6 +333,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PSCollectionViewExample-Prefix.pch";
 				INFOPLIST_FILE = "PSCollectionViewExample-Info.plist";
@@ -343,6 +350,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PSCollectionViewExample-Prefix.pch";
 				INFOPLIST_FILE = "PSCollectionViewExample-Info.plist";
