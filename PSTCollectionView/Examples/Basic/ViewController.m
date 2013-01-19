@@ -17,20 +17,9 @@ static NSString *cellIdentifier = @"TestCell";
 - (void)loadView {
 	[super loadView];
 	
-    
-
-    
 	self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 	
 	CustomFlowLayout *collectionViewFlowLayout = [[CustomFlowLayout alloc] init];
-	
-	[collectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-	[collectionViewFlowLayout setItemSize:CGSizeMake(240,100)];
-
-	[collectionViewFlowLayout setMinimumInteritemSpacing:20];
-	[collectionViewFlowLayout setMinimumLineSpacing:10];
-	[collectionViewFlowLayout setSectionInset:UIEdgeInsetsMake(10, 0, 20, 0)];
-    
 	
     _layout = collectionViewFlowLayout;
 	_collectionView = [[PSUICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:collectionViewFlowLayout];
@@ -56,11 +45,11 @@ static NSString *cellIdentifier = @"TestCell";
     [self.collectionView addGestureRecognizer:pinchRecognizer];
     
     
-    int numberOfViews            = 5;
-    CGFloat animationTimePerView = 0.15;
+    int numberOfViews            = 4;
+    CGFloat animationTimePerView = 0.25;
 	for (int i = 0; i < numberOfViews; i++)
     {
-        NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath* path = [NSIndexPath indexPathForRow:i inSection:0];
 		[self performSelector: @selector(addView:) withObject: path afterDelay: i*animationTimePerView];
      
         if (i == numberOfViews - 1)
@@ -75,14 +64,36 @@ static NSString *cellIdentifier = @"TestCell";
   
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([self.data count] < 4)
+    {
+        return CGSizeMake(260, 160);
+    }
+    else
+    {
+        return CGSizeMake(260, 100);
+    }
+   
+}
 
 - (void)scrollToBottomAnimated:(BOOL)animated
 {
     NSIndexPath* path = [NSIndexPath indexPathForRow:3 inSection:0];
-   [ _collectionView scrollToItemAtIndexPath:path atScrollPosition:PSTCollectionViewScrollPositionBottom animated:YES];
+   [ _collectionView scrollToItemAtIndexPath:path atScrollPosition:PSTCollectionViewScrollPositionCenteredVertically animated:YES];
+
+    [self performSelector: @selector(deleteItem) withObject: nil afterDelay:0.5];
+
 }
 
-
+- (void)deleteItem
+{
+     NSIndexPath* path = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSArray* array = [[NSArray alloc] initWithObjects:path, nil];
+    [self.data removeLastObject];
+    [_collectionView deleteItemsAtIndexPaths:array];
+}
 
 
 
@@ -92,7 +103,8 @@ static NSString *cellIdentifier = @"TestCell";
     
     [self.data addObject:path];
      NSArray* array = [[NSArray alloc] initWithObjects:path, nil];
-    [_collectionView insertItemsAtIndexPaths: array];
+   // [_collectionView insertItemsAtIndexPaths: array];
+    [_collectionView reloadData];
 }
 
 
@@ -135,7 +147,7 @@ static NSString *cellIdentifier = @"TestCell";
 - (PSUICollectionViewCell *)collectionView:(PSUICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Cell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-     cell.label.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row ];
+    cell.label.text = [[NSString alloc] initWithFormat:@"%d",[ [self.data objectAtIndex:[indexPath row]] row]];
     return cell;
 }
 
