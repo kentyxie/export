@@ -11,4 +11,6 @@
 
 @interface CustomFlowLayout : PSUICollectionViewFlowLayout
 
+- (void)itemResizeAfterDelay:(NSTimeInterval)delay;
+- (void)setCurrentDeleteIndexPath:(NSIndexPath*)path;
 @end

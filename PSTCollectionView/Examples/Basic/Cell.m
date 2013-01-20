@@ -25,4 +25,8 @@
     return self;
 }
 
+-(void)layoutSubviews
+{
+    NSLog(@"layoutSubvies");
+}
 @end

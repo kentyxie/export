@@ -13,6 +13,12 @@
 @interface ViewController : UIViewController <PSUICollectionViewDataSource, PSUICollectionViewDelegate>
 
 @property (retain, nonatomic) PSUICollectionView *collectionView;
-@property (retain, nonatomic) CustomFlowLayout* layout;
+@property (retain, nonatomic) PSUICollectionViewFlowLayout* layout;
 @property (retain, nonatomic) NSMutableArray* data;
+@property (assign, nonatomic) CGSize size;
+
+
+@property (nonatomic, retain) UIPanGestureRecognizer   *_panGesture;
+@property (nonatomic, assign) CGFloat _initialTouchPositionX;
+@property (nonatomic, assign) CGFloat _initialHorizontalCenter;
 @end

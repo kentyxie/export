@@ -9,9 +9,15 @@
 #import "CustomFlowLayout.h"
 
 
+@interface CustomFlowLayout ()
+
+@property (retain, nonatomic) NSIndexPath* deletePath;
 
 
-#define ITEM_SIZE 60.0
+@end
+
+#define ITEM_FIXED_WIDTH 200
+#define ITEM_FIXED_HEIGHT 160
 
 @implementation CustomFlowLayout
 
@@ -22,12 +28,53 @@
 {
     self = [super init];
     if (self) {
-        self.itemSize = CGSizeMake(260, 100);
+        self.itemSize = CGSizeMake(ITEM_FIXED_WIDTH, ITEM_FIXED_HEIGHT);
         self.scrollDirection = UICollectionViewScrollDirectionVertical;
         self.sectionInset = UIEdgeInsetsMake(20, 0.0, 20, 0.0);
         self.minimumLineSpacing = 20.0;
     }
+    
     return self;
+}
+
+- (void)setCurrentDeleteIndexPath:(NSIndexPath*)path;
+{
+    self.deletePath = path;
+}
+
+- (void)itemResizeAfterDelay:(NSTimeInterval)delay
+{
+    
+    NSLog(@"%@ %f",@"itemResizeAfterDelay", delay);
+    
+    [self performSelector: @selector(itemResize) withObject:nil afterDelay:delay];
+    
+   
+}
+
+- (void)itemResize
+{
+    self.itemSize = [self getDynamicItemSize];
+}
+
+- (CGSize)getDynamicItemSize
+{
+    NSInteger numberOfItem = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:(NSInteger) 0];
+
+    
+    CGSize size;
+    if (numberOfItem == 0)
+    {
+        size = CGSizeMake(ITEM_FIXED_WIDTH, ITEM_FIXED_HEIGHT);
+    }
+    else
+    {
+        NSLog(@"getDynamicItemSize");
+        CGFloat height = self.collectionView.frame.size.height / numberOfItem;
+        size = CGSizeMake(ITEM_FIXED_WIDTH,height);
+    }
+    
+    return size;
 }
 
 - (PSUICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
@@ -52,9 +99,15 @@
 {
     NSLog(@"finalLayoutAttributesForDisappearingItemAtIndexPath: %d", [itemIndexPath row]);
     PSUICollectionViewLayoutAttributes* attributes = [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
-    //CGSize size = [self collectionView].frame.size;
-    //attributes.center = CGPointMake(-attributes.center.x, attributes.center.y);
     
+    
+    if (self.deletePath && ([self.deletePath compare:itemIndexPath] == NSOrderedSame ))
+    {
+        //CGSize size = [self collectionView].frame.size;
+        attributes.center = CGPointMake(-attributes.center.x, attributes.center.y);
+    }
+  
+   // attributes.center = CGPointMake(-attributes.center.x, attributes.center.y);
     return attributes;
 }
 
